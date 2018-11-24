@@ -55,7 +55,7 @@ var con = mysql.createConnection({
   password: "",
   database: ""
 });
-
+var guess;
 
 
 
@@ -138,7 +138,24 @@ client.on("message", async message => {
 	}
 
 	//HIER DER "EIGENTLICHE" QUELLTEXT
-
+	if(command == "guess"){
+		
+		if(args[0].length>1) {
+			message.channel.sendMessage('Wort')
+			//guess = word
+		}
+		else {
+			if(word.indexOf(args[0]) != -1){
+				//punkte hinzufügen
+			 
+			
+			
+			}
+			else {
+				//punkte abziehen
+			}
+		}
+	} 
 });
 
 
