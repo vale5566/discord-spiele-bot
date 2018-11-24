@@ -55,6 +55,7 @@ var con = mysql.createConnection({
   password: config.db_pw,
   database: "lordofthegames"
 });
+var randomWord;
 
 
 
