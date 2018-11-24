@@ -50,10 +50,10 @@ const sz = "\u00DF";
 console.log("\x1b[36m Variablen werden geladen...");
 //SQL-Connection, zzt noch unnötig
 var con = mysql.createConnection({
-  host: "",
-  user: "",
-  password: "",
-  database: ""
+  host: "81.169.133.223",
+  user: "lotg",
+  password: config.db_pw,
+  database: "lordofthegames"
 });
 
 
@@ -81,9 +81,10 @@ var con = mysql.createConnection({
 	//Statusmeldung des Bots
 	client.user.setActivity("auf Version " + version);
 	//Verbinden mit der DB
-	//con.connect();
+	con.connect();
+	console.log(consoleTuerkis + aktuelleZeit() + "[LOGIN_DB] [BOT] Erfolgreich mit Datenbank verbunden.")
 	//Einlognachricht
-	console.log(consoleTuerkis + aktuelleZeit() + "[LOGIN] [LordOfTheGames] [" + version + "] Bot ist betriebsbereit.");
+	console.log(consoleTuerkis + aktuelleZeit() + "[LOGIN_DISCORD] [LordOfTheGames] [" + version + "] Bot ist betriebsbereit.");
 });
 
 
