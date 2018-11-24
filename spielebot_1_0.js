@@ -152,42 +152,31 @@ client.on("message", async message => {
 			}
 		}
 		else if(message.channel.id == config.c_hangman) {
-			/*
-						if(command == "guess"){
-
-					if(args[0].length>1) {
-						message.channel.sendMessage('Wort')
-						//guess = word
-					}
-					else {
-						if(word.indexOf(args[0]) != -1){
-							//punkte hinzufügen
-
-
-
-						}
-						else {
-							//punkte abziehen
-						}
-					}
-				}
-				*/
 			if (command == "start" && args[0] === "play" && args[1] === "hangman") {
-				 var randomWord = randomWords();
-				 var randomWordLength = randomWord.length;
-				 var messageSend = "";
-				 for (i = 0; i < randomWordLength; i++) {
-					 messageSend = messageSend + ":large_blue_circle:";
-				 }
-				 message.channel.send(messageSend);
-			} else if (command == "start" && args[0] === "play") {
-				 message.channel.send("Right now you can play: Hangman");
-			}
-			if (command == "guess") {
-				var letter = args[0];
-				if (randomWord.indexOf(letter) != 1) {
-				}
-			}
+			    randomWord = randomWords();
+			    var randomWordLength = randomWord.length;
+			    var messageSend = "";
+			    for (i = 0; i < randomWordLength; i++) {
+			      messageSend = messageSend + ":large_blue_circle:";
+			    }
+			    message.channel.send(messageSend);
+			  } else if (command == "start" && args[0] === "play") {
+			    message.channel.send("Right now you can play: Hangman");
+			  }
+
+			  if (command == "guess") {
+			    if (args[0].length > 1) {
+			      message.channel.sendMessage("Wort");
+			      //guess = word
+			    } else {
+			      message.channel.sendMessage(randomWord);
+			      if (randomWord.indexOf(args[0]) != -1) {
+				message.channel.sendMessage("nice");
+			      } else {
+				message.channel.sendMessage("not nice");
+			      }
+			    }
+			  }	
 		}
 	}
 	//kein befehl, zurzeit unbenutzt
