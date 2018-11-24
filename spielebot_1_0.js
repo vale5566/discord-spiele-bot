@@ -55,7 +55,7 @@ var con = mysql.createConnection({
   password: "",
   database: ""
 });
-var guess;
+
 
 
 
