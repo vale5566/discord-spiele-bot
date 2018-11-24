@@ -1,5 +1,8 @@
 {
   "token"             : "",
   "db_pw"             : "",
-  "prefix"            : "/"
+  "prefix"            : "/",
+
+  "c_general_infos"   : "516010269214900264",
+  "c_hangman"         : "516010291603963925"
 }

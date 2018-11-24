@@ -137,8 +137,22 @@ client.on("message", async message => {
 		args = message.content.slice(config.prefix.length).trim().split(/ +/g);
 		command = args.shift().toLowerCase();
 	}
+	else {
+		args = null;
+		command = null;
+	}
 
-	//HIER DER "EIGENTLICHE" QUELLTEXT
+	//Nachricht ist befehl
+	if(command != null) {
+		if(message.channel.id == config.c_general_infos) {
+			//STATUS etc.
+		}
+		else if(message.channel.id == config.c_hangman) {
+
+		}
+	}
+	//kein befehl, zurzeit unbenutzt
+	else {}
 
 });
 
