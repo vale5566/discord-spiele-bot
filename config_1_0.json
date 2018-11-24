@@ -1,4 +1,13 @@
 {
+<<<<<<< HEAD
   "token"             : "NTE1OTc1MTM1NDQ2OTU4MTAw.DttFvA.ginfZaPaBPGjXwXLWHeYnKQnLuI",
   "prefix"            : "/"
+=======
+  "token"             : "",
+  "db_pw"             : "",
+  "prefix"            : "/",
+
+  "c_general_infos"   : "516010269214900264",
+  "c_hangman"         : "516010291603963925"
+>>>>>>> 3049ed5c76d753d25775b67d081c7edd45bb3efe
 }

@@ -12,7 +12,7 @@
 ///////////////////////////////////////////////////
 Spielebot erstellt während der HPI-Codenight 2018.
 
-Copyright by Vincent (vale5566), Finn (FunKuchen) und Andreas Zander (LordAkkaron).
+Copyright by Valentin (vale5566), Finn (FunKuchen) und Andreas Zander (LordAkkaron).
 
 Version 1.0 (24. November 2018 21:50)
 ///////////////////////////////////////////////////
@@ -20,12 +20,11 @@ Version 1.0 (24. November 2018 21:50)
 
 //IMPORTS
 console.log("\x1b[36m Importiere...");
+var randomWords = require("random-words");
 //Discord, config und SQL
 const Discord = require("discord.js");
 const config = require("./config_1_0.json");
-var mysql = require('mysql');
-
-
+var mysql = require("mysql");
 
 //KONSTANTEN
 console.log("\x1b[36m Konstanten werden geladen...");
@@ -44,8 +43,6 @@ const oe = "\u00F6";
 const oE = "\u00D6";
 const sz = "\u00DF";
 
-
-
 //VARIABLEN
 console.log("\x1b[36m Variablen werden geladen...");
 //SQL-Connection, zzt noch unnötig
@@ -56,13 +53,6 @@ var con = mysql.createConnection({
   database: ""
 });
 
-
-
-
-
-
-
-
 /*
   _      ____   _____ _____ _   _
  | |    / __ \ / ____|_   _| \ | |
@@ -72,46 +62,23 @@ var con = mysql.createConnection({
  |______\____/ \_____|_____|_| \_|
 
  */
- console.log("\x1b[36m Login eingeleitet...");
-  client.login(config.token);
+console.log("\x1b[36m Login eingeleitet...");
+client.login(config.token);
 
-
-
- client.on("ready", () => {
-	//Statusmeldung des Bots
-	client.user.setActivity("auf Version " + version);
-	//Verbinden mit der DB
-	//con.connect();
-	//Einlognachricht
-	console.log(consoleTuerkis + aktuelleZeit() + "[LOGIN] [LordOfTheGames] [" + version + "] Bot ist betriebsbereit.");
+client.on("ready", () => {
+  //Statusmeldung des Bots
+  client.user.setActivity("auf Version " + version);
+  //Verbinden mit der DB
+  //con.connect();
+  //Einlognachricht
+  console.log(
+    consoleTuerkis +
+      aktuelleZeit() +
+      "[LOGIN] [LordOfTheGames] [" +
+      version +
+      "] Bot ist betriebsbereit."
+  );
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
   __  __ ______  _____ _____         _____ ______
@@ -123,10 +90,11 @@ var con = mysql.createConnection({
 
 */
 client.on("message", async message => {
-	//argumente und command der nachricht
-	var args;
+  //argumente und command der nachricht
+  var args;
   var command;
 
+<<<<<<< HEAD
 	//wenn nachricht von bot oder per pm ist, ignorieren
 	if(message.author.bot) return;
   if(message.guild == null) return;
@@ -156,17 +124,39 @@ client.on("message", async message => {
 			}
 		}
 	} 
+=======
+  //wenn nachricht von bot oder per pm ist, ignorieren
+  if (message.author.bot) return;
+  if (message.guild == null) return;
+
+  //analysieren der nachricht, zuordnen von command (/startgame zB) und argumenten
+  if (message.content.indexOf(config.prefix) == 0) {
+    args = message.content
+      .slice(config.prefix.length)
+      .trim()
+      .split(/ +/g);
+    command = args.shift().toLowerCase();
+  }
+
+  //HIER DER "EIGENTLICHE" QUELLTEXT
+  if (command == "start" && args[0] === "play" && args[1] === "hangman") {
+    var randomWord = randomWords();
+    var randomWordLength = randomWord.length;
+    var messageSend = "";
+    for (i = 0; i < randomWordLength; i++) {
+      messageSend = messageSend + ":large_blue_circle:";
+    }
+    message.channel.send(messageSend);
+  } else if (command == "start" && args[0] === "play") {
+    message.channel.send("Right now you can play: Hangman");
+  }
+  if (command == "guess") {
+    var letter = args[0];
+    if (randomWord.indexOf(letter) != 1) {
+    }
+  }
+>>>>>>> 3049ed5c76d753d25775b67d081c7edd45bb3efe
 });
-
-
-
-
-
-
-
-
-
-
 
 /*
   ______ _    _ _   _  _____ _______ _____ ____  _   _  _____
@@ -178,128 +168,102 @@ client.on("message", async message => {
 
 */
 
-
 /*
 PARAMTER: WIE WAHRSCHEINLICH SOLL TRUE ALS RÜCKGABEWERT KOMMEN
 RÜCKGABE: TRUE OR FALSE
 */
 function trueMitProzent(wahrscheinlichkeit) {
-	if((Math.floor(Math.random() * 100)) < wahrscheinlichkeit) {
-		return true;
-	}
-	else {
-		return false;
-	}
+  if (Math.floor(Math.random() * 100) < wahrscheinlichkeit) {
+    return true;
+  } else {
+    return false;
+  }
 }
-
-
 
 /*
 PARAMTER: MIN UND MAX (GANZE ZAHLEN)
 RÜCKGABE: ZUFALLSZAHL ZWISCHEN MIN UND MAX
 */
 function zahlZwischen(min, max) {
-	var zahl = Math.floor(Math.random() * (max - min + 1)) + min;
-	return zahl;
+  var zahl = Math.floor(Math.random() * (max - min + 1)) + min;
+  return zahl;
 }
-
-
 
 /*
 PARAMTER: ZU TRIMMENDER createdAt-STRING
 RÜCKGABE: GETRIMMTER STRING MIT DATUM UND ZEIT
 */
 function trimCreatedTimestamp(timestamp) {
-	var date = new Date(timestamp);
-	var timeString = new String();
+  var date = new Date(timestamp);
+  var timeString = new String();
 
-	timeString = date.getHours() + ":" + date.getMinutes();
+  timeString = date.getHours() + ":" + date.getMinutes();
 
-	return timeString;
-
+  return timeString;
 }
-
-
 
 /*
 PARAMTER: KEINE
 RÜCKGABE: STRING MIT AKTUELLER ZEIT
 */
 function aktuelleZeit() {
-	var zeit = new String();
-	zeit = "[" + trimCreatedTimestamp(Date.now()) + "] ";
-	return zeit;
+  var zeit = new String();
+  zeit = "[" + trimCreatedTimestamp(Date.now()) + "] ";
+  return zeit;
 }
-
-
-
-
-
 
 /*
 PARAMETER: ERWÄHNUNGSSTRING    <@8392483294832948> ODER <@!4583294832940>
 RÜCKGABE: ID
 */
 function cutTag(tag) {
-	if(tag == null) return -1;
-	var start = 2;
+  if (tag == null) return -1;
+  var start = 2;
 
-	if(tag.charAt(start) == "!") {
-		start = 3;
-	}
+  if (tag.charAt(start) == "!") {
+    start = 3;
+  }
 
-	return tag.substring(start,tag.length-1);
-
+  return tag.substring(start, tag.length - 1);
 }
-
-
-
 
 /*
 PARAMETER: Titel, Text
 RÜCKGABE:  embed
 */
-function embed(title,text) {
-	var newEmbed = new Discord.RichEmbed()
-	.setTitle(title)
-	.setDescription(text + "\n")
-	.setColor("#0080FF");
+function embed(title, text) {
+  var newEmbed = new Discord.RichEmbed()
+    .setTitle(title)
+    .setDescription(text + "\n")
+    .setColor("#0080FF");
 
-	return newEmbed;
+  return newEmbed;
 }
-
-
 
 function nickToID(id) {
   var member = client.guilds.array()[0].members.find(x => x.id === id);
   var nick = member.nickname;
 
-  if(nick == null) nick = member.user.username;
+  if (nick == null) nick = member.user.username;
 
   return nick;
 }
-
-
 
 function nickToMember(member) {
   var nick = member.nickname;
 
-  if(nick == null) nick = member.user.username;
+  if (nick == null) nick = member.user.username;
 
   return nick;
 }
 
-
-
 function memberToID(id) {
   var member = client.guilds.array()[0].members.find(x => x.id === id);
-  if(member != null) return member;
+  if (member != null) return member;
   else return null;
 }
 
-
-
-async function sendAndDelete(msg,channel,time) {
-	var answer = await channel.send(msg);
-	answer.delete(time).catch();
+async function sendAndDelete(msg, channel, time) {
+  var answer = await channel.send(msg);
+  answer.delete(time).catch();
 }
