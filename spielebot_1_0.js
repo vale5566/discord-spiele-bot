@@ -24,7 +24,7 @@ console.log("\x1b[36m Importiere...");
 const Discord = require("discord.js");
 const config = require("./config_1_0.json");
 var mysql = require('mysql');
-
+var randomWords = require("random-words");
 
 
 //KONSTANTEN
@@ -177,7 +177,7 @@ client.on("message", async message => {
 				message.channel.sendMessage("not nice");
 			      }
 			    }
-			  }	
+			  }
 		}
 	}
 	//kein befehl, zurzeit unbenutzt
