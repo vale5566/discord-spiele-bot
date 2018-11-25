@@ -53,6 +53,14 @@ var con = mysql.createConnection({
   database: "lordofthegames"
 });
 var randomWord;
+var tttActive = false;
+var player1ID = 0;
+var player2ID = 0;
+var amZug = 1;
+var spielfeld = new Array(3);
+spielfeld[0] = new Array(3);
+spielfeld[1] = new Array(3);
+spielfeld[2] = new Array(3);
 var searchedCharacter;
 var randomWordLength;
 var guessedCharacters = [];
@@ -181,6 +189,82 @@ client.on("message", async message => {
         }
       }
     }
+    else if(message.channel.id == config.c_tictactoe) {
+			if(tttActive) {
+				if(command == "set") {
+
+				}
+			}
+			else {
+				if(command == "start") {
+					if(player1ID == 0) {
+						message.delete(10);
+						player1ID = message.author.id;
+						message.channel.send("Du hast erfolgreich eine neue Runde Tic-Tac-Toe gestartet. Warte auf einen zweiten Mitspieler...").catch();
+					}
+					else if(player2ID == 0 && message.author.id != player1ID) {
+						message.delete(10);
+						player2ID = message.author.id;
+						message.channel.send("Du bist nun erfolgreich Mitspieler der aktuellen Runde Tic-Tac-Toe.");
+						tttActive = true;
+						amZug = zahlZwischen(1,2);
+
+						var startZeichen = ":x:";
+						if(amZug == 2) startZeichen = ":o:";
+
+						var startText = "**Die Runde startet.** \n <@!" + player1ID + "> (:x:) und <@!" + player2ID + "> (:o:) macht euch bereit. \n\n Spieler " + amZug + " (" + startZeichen + ") startet. \n\n Starten kannst du mit ```!set xy```";
+					}
+					else if(message.author.id == player1ID){
+						message.delete(10);
+						message.channel.send("Du wartest momentan auf einen Mitspieler.")
+					}
+				}
+				else {
+					message.delete(10);
+					message.channel.send("Bitte starte zuerst ein Spiel mit ```!start```").catch();
+				}
+			}
+
+
+
+
+			if(command == "start") {
+				//niemand gemeldet
+				if(tttActive == false) {
+					tttActive = true;
+					player1ID = message.author.id;
+				}
+				//schon mind. ein spieler
+				else {
+					//er wird zweiter spieler
+					if(player2ID==0 && message.author.id != player1ID) {
+						player2ID = message.author.id;
+						message.channel.send("Du bist erfolgreich der aktuellen Runde Tic-Tac-Toe beigetreten.").catch();
+					}
+					//schon zwei spieler
+					else {
+						message.channel.send("Es gibt bereits zwei Mitspieler. Bitte warte bis diese ihre Runde beendet haben, danke.");
+					}
+				}
+			}
+			else {
+				//ist aktueller mitspieler
+				if(message.author.id == player1ID || message.author.id == player2ID) {
+
+				}
+				//kein spiel aktiv oder kein mitspieler
+				else {
+					//er ist kein mitspieler
+					if(tttActive) {
+
+					}
+					//kein spiel gestartet
+					else {
+
+					}
+				}
+			}
+		}
   }
   //kein befehl, zurzeit unbenutzt
   else {
@@ -303,6 +387,17 @@ function addUserToDB(id) {
     }
   );
 }
+
+
+async function changeUserPoints(id, balance) {
+	var query = con.query("UPDATE t_user SET points = points + " + balance + " WHERE discord_id = " + id, function (err, result) {
+    if (err) {
+      console.log(consoleRot + aktuelleZeit() + "[ERR_UPDATING_ELITECOINS] [" + nickToID(id) + "] Wert: " + balance);
+      throw err;
+    }
+  });
+}
+
 
 /*
 PARAMTER: WIE WAHRSCHEINLICH SOLL TRUE ALS RÜCKGABEWERT KOMMEN
