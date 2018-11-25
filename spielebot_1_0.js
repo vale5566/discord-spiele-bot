@@ -127,6 +127,7 @@ client.on("message", async message => {
     command = null;
   }
 
+  
   //Nachricht ist befehl
   if (command != null) {
     addUserToDB(message.author.id);
@@ -179,7 +180,7 @@ client.on("message", async message => {
         if (args[0].length > 1) {
           if (args[0].toLowerCase() === randomWord) {
             message.channel.sendMessage("U guessed it!!");
-            addPointsToUser(message.author.id, 5);
+            changeUserPoints(message.author.id, 5);
           } else {
             message.channel.sendMessage("That's not the word!");
             changeUserPoints(message.author.id, -1);
