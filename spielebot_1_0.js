@@ -136,6 +136,29 @@ client.on("message", async message => {
           statusFromUserInChannel(message.author.id, message.channel);
         else statusFromUserInChannel(cutTag(args[0]), message.channel);
       }
+			else if(command == "leaderboard" || command == "lb" || command == "top") {
+				var query = con.query("SELECT  discord_id, points FROM t_user ORDER BY points DESC", function (err, result) {
+          if (err) {
+            console.log(consoleRot + aktuelleZeit() + "[ERR_REQUESTING_DATA] [" + message.author.username + "]");
+            throw err;
+          }
+          else {
+            var liste = "";
+            for(var i = 0; i < result.length && i < 10; i++) {
+              liste = liste + (i+1) + ". <@" + result[i].discord_id + "> - " + result[i].points + "Pkt." + "\n";
+            }
+
+            const embed = new Discord.RichEmbed()
+            .setTitle("**Rangliste**")
+            .setColor("#3893e8")
+						.addField("Top 10:",liste)
+						.setFooter("© LotG",client.user.avatarURL)
+            .setTimestamp();
+
+            message.channel.send(embed).catch();
+          }
+        });
+			}
     } else if (message.channel.id == config.c_hangman) {
       if (command == "start" && args[0] === "play" && args[1] === "hangman") {
         randomWord = randomWords();
