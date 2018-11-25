@@ -148,9 +148,14 @@ client.on("message", async message => {
         if (args[0].length > 1) {
           if (args[0].toLowerCase() === randomWord) {
             message.channel.sendMessage("U guessed it!!");
+            addPointsToUser(message.author.id, 5);
+          } else {
+            message.channel.sendMessage("That's not the word!");
+            changeUserPoints(message.author.id, -1);
           }
         } else {
           if (randomWord.indexOf(args[0]) != -1) {
+            changeUserPoints(message.author.id, 1);
             searchedCharacter = args[0];
             guessedCharacters.push(searchedCharacter);
             var position = randomWord.indexOf(args[0]);
@@ -165,11 +170,9 @@ client.on("message", async message => {
             });
             message.channel.sendMessage(messageSend);
           } else {
-            message.channel.sendMessage("Not included.");
-            //leaderboard -1
+            message.channel.sendMessage("The letter is not included.");
+            changeUserPoints(message.author.id, -1);
           }
-
-          /* Uhh, gefährlich, Rechner entsperrt und unbewacht rumstehen zu lassen ... */
 
           //check if word completely guessed
           if (guessedCharacters.length === splittedWord.length) {
